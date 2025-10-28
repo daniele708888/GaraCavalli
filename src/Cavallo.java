@@ -1,26 +1,35 @@
-public class Cavallo {
-    private String nome;
-    private int posizione;
+public class Cavallo extends Thread{
 
-    public Cavallo(String nome) {
-        this.nome = nome;
-        this.posizione = 0;
+    private final String name;
+    private int lentezza;
+    public Cavallo(String name, int lentezza) {
+        super();
+        this.name = name;
+        this.lentezza = lentezza;
     }
-
-    public void avanza(int metri) {
-        posizione += metri;
-    }
-
-    public int getPosizione() {
-        return posizione;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
+    /**override del metodo run */
     @Override
-    public String toString() {
-        return nome + " (" + posizione + " m)";
+    public void run(){
+        System.out.println("Cavallo " +
+                name + " comincia il suo galoppo");
+        for (int i = 1; i <= 10; i++) {
+            try {
+                sleep(lentezza);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            System.out.println(name +" cavalca - passo: " + i);
+        }
+        if(Main.getPrimo().equals("")){
+            Main.setPrimo(this.name);
+        }
+    }
+    /**getter per il parametro di lentezza SUPERFLUI*/
+    protected int getLentezza(){
+        return lentezza;
+    }
+    /**setter per il parametro di lentezza */
+    protected void setLentezza(int lentezza){
+        this.lentezza=lentezza;
     }
 }
